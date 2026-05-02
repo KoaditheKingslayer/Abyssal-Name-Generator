@@ -1,140 +1,110 @@
 body {
-    background-color: #0d0d0d;
-    color: #e0e0e0;
+    background-color: #1a1a1a;
+    color: #ff3333;
     font-family: 'Courier New', Courier, monospace;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    user-select: none; /* Prevents text highlighting during fast clicks */
 }
 
 .container {
     text-align: center;
-    background: #1a1a1a;
-    padding: 2.5rem;
+    background: #111;
+    padding: 30px;
     border: 2px solid #330000;
-    box-shadow: 0 0 30px #ff000022;
-    border-radius: 8px;
-    min-width: 400px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    width: 500px;
 }
 
-.title {
-    color: #880000;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 30px;
-}
+.title { letter-spacing: 5px; text-shadow: 0 0 10px #ff0000; margin-bottom: 20px; }
 
-.slot-machine {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.slot-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-
-.slot-box {
-    width: 110px;
-    height: 70px;
-    background: #000;
-    border: 1px solid #444;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ff3333;
-    box-shadow: inset 0 0 10px #ff000033;
-    position: relative;
-    overflow: hidden;
-}
-
+/* Restoring the chunky GitHub buttons */
 button {
-    background: #330000;
-    color: #fff;
-    border: 1px solid #880000;
-    padding: 8px 15px;
+    background: #220000;
+    color: #ff3333;
+    border: 1px solid #ff3333;
     cursor: pointer;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    transition: all 0.1s;
-}
-
-button:hover:not(:disabled) {
-    background: #660000;
-    border-color: #ff0000;
-}
-
-button:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.spin-all {
-    width: 100%;
-    max-width: 370px; 
-    padding: 15px;
-    font-size: 1.2rem;
-    margin: 10px auto;
-    display: block;
+    font-family: inherit;
+    padding: 8px 15px;
     font-weight: bold;
 }
 
-.result-area {
-    margin-top: 40px;
-    border-top: 1px solid #333;
-    padding-top: 20px;
+button:hover { background: #ff3333; color: #111; }
+
+.main-roll {
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 15px;
+    margin-top: 15px;
+    letter-spacing: 3px;
 }
 
+.slot-container { display: flex; justify-content: space-around; margin-top: 15px; }
+.slot-text { 
+    font-size: 1.8rem; 
+    font-weight: bold; 
+    height: 55px; 
+    width: 140px; 
+    border: 2px solid #330000; 
+    line-height: 55px; 
+    background: #000; 
+    margin-top: 8px;
+}
+
+/* The Animated Warp Name */
 #final-name {
-    color: #ff0000;
-    font-size: clamp(2rem, 8vw, 3.2rem); /* Scales font based on screen/length */
+    font-size: 3.5rem;
+    color: #ff3333;
     text-shadow: 0 0 15px #ff0000;
-    margin: 0;
-    min-height: 4rem;
-    word-break: break-all; /* Safety for very long combos */
-    transition: all 0.3s ease-in-out;
+    margin: 30px 0;
+    position: relative;
+    display: inline-block;
+    filter: url(#abyssalWarp);
 }
 
-.container:has(#final-name:not(:empty)) #final-name {
-    animation: pulse 2s infinite;
+#final-name::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+    color: rgba(255, 0, 0, 0.3);
+    filter: blur(4px);
+    z-index: -1;
+    animation: abyssal-vibration 0.1s infinite;
 }
 
-@keyframes pulse {
-    0% { text-shadow: 0 0 10px #ff0000; }
-    50% { text-shadow: 0 0 25px #ff0000, 0 0 5px #ffffff; }
-    100% { text-shadow: 0 0 10px #ff0000; }
+@keyframes abyssal-vibration {
+    0% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    100% { transform: translate(1px, 1px); }
 }
 
-/* The New "Clean" Spin Effect */
-.spinning {
-    filter: blur(0.5px); /* Minimal blur for legibility */
-    color: #ff8888;
-    animation: jitter 0.1s infinite alternate;
-}
-
-@keyframes jitter {
-    from { transform: translateY(-2px); }
-    to { transform: translateY(2px); }
+/* Pulsing Sigil Area */
+.sigil-area {
+    margin-top: 10px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
 }
 
 #sigilCanvas {
-    margin-top: 20px;
-    filter: drop-shadow(0 0 8px #ff0000);
-    opacity: 0; /* Hidden until a name is formed */
+    filter: drop-shadow(0 0 10px #ff0000);
+    opacity: 0;
     transition: opacity 1s ease-in;
 }
 
-/* Show canvas when it has been drawn */
 #sigilCanvas.visible {
     opacity: 1;
+    /* This makes the sigil "breathe" */
+    animation: sigil-pulse 4s ease-in-out infinite;
 }
+
+@keyframes sigil-pulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 8px #ff0000); }
+    50% { transform: scale(1.03); filter: drop-shadow(0 0 15px #ff0000); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 8px #ff0000); }
+}
+
+.spinning { color: #440000; }
+hr { border: 0; border-top: 2px solid #330000; margin: 20px 0; }
