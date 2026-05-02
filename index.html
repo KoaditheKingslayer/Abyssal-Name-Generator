@@ -2,37 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abyssal Namer</title>
     <link rel="stylesheet" href="namer.css">
 </head>
 <body>
+
     <div class="container">
-        <h2 class="title">Invoke the Unspeakable</h2>
+        <h2 class="title">INVOKE THE UNSPEAKABLE</h2>
         
-        <div class="slot-machine">
-            <div class="slot-container">
-                <button onclick="roll(0)">Roll</button>
-                <div id="slot-0" class="slot-box">???</div>
+        <div class="slot-container">
+            <div class="slot-box">
+                <button onclick="roll(0)">ROLL</button>
+                <div id="slot-1-0" class="slot-text">---</div>
             </div>
-            <div class="slot-container">
-                <button onclick="roll(1)">Roll</button>
-                <div id="slot-1" class="slot-box">???</div>
+            <div class="slot-box">
+                <button onclick="roll(1)">ROLL</button>
+                <div id="slot-1-1" class="slot-text">---</div>
             </div>
-            <div class="slot-container">
-                <button onclick="roll(2)">Roll</button>
-                <div id="slot-2" class="slot-box">???</div>
+            <div class="slot-box">
+                <button onclick="roll(2)">ROLL</button>
+                <div id="slot-1-2" class="slot-text">---</div>
             </div>
         </div>
 
-        <button class="spin-all" onclick="rollAll()">SPIN ALL</button>
-
+        <button class="main-roll" onclick="rollAll()">SPIN ALL</button>
+        
+        <hr>
+        
         <div class="result-area">
             <p>The Name Revealed:</p>
-            <h1 id="final-name">--------</h1>
+            <div id="final-name" data-text="">--------</div>
+        </div>
+
+        <div class="sigil-area">
             <canvas id="sigilCanvas" width="200" height="200"></canvas>
         </div>
     </div>
+
+    <svg style="position: absolute; width: 0; height: 0;">
+        <filter id="abyssalWarp">
+            <feTurbulence id="warpTurbulence" type="fractalNoise" baseFrequency="0.01 0.1" numOctaves="2" />
+            <feDisplacementMap in="SourceGraphic" scale="15" />
+        </filter>
+    </svg>
+
     <script src="namer.js"></script>
 </body>
 </html>
